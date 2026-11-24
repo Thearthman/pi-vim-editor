@@ -267,19 +267,20 @@ if another extension renders them from the
 Vim editing, Visual highlighting, and optional cursor shapes remain active.
 Settings are read when a session starts, including for an existing editor.
 
-To also show the mode through the cursor shape, enable both settings:
+To show the mode through the terminal cursor, enable Pi's hardware cursor:
 
 ```json
 {
-  "showHardwareCursor": true,
-  "vimEditor": { "cursorShape": true }
+  "showHardwareCursor": true
 }
 ```
 
-`cursorShape` defaults to `false`. When enabled, INSERT uses a steady bar,
-NORMAL and Visual modes a steady block, and REPLACE a steady underline. Pi
-still controls cursor visibility; with its hardware cursor hidden, the
-software cursor stays unchanged.
+`cursorShape` defaults to the mode-specific shapes below (or can be set to
+`true` explicitly). INSERT uses a
+steady bar, NORMAL and Visual modes a steady block, and REPLACE a steady
+underline. Set it to `false` to disable cursor shapes. Pi still controls
+cursor visibility; with its hardware cursor hidden, the software cursor stays
+unchanged.
 
 To pick the style per mode, set `cursorShape` to a map instead of `true`:
 

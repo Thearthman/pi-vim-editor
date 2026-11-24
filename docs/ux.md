@@ -522,11 +522,11 @@ search query is shown there. Other extensions can still display the
 cursor shapes keep working. Each render uses the latest position read at
 session start, even when the editor is reused.
 
-Set `"vimEditor": { "cursorShape": true }` and `"showHardwareCursor": true`
-to use steady cursor shapes: bar in INSERT, block in NORMAL and all Visual
-modes, underline in REPLACE. Cursor shapes are off by default and never
-change Pi's hardware-cursor visibility setting. When the hardware cursor is
-hidden, Pi's software cursor stays unchanged. Visual selections remain
+With `"showHardwareCursor": true`, the default cursor shapes are a bar in
+INSERT, a block in NORMAL and all Visual modes, and an underline in REPLACE.
+Set `"vimEditor": { "cursorShape": false }` to disable them. Cursor shapes
+never change Pi's hardware-cursor visibility setting. When the hardware cursor
+is hidden, Pi's software cursor stays unchanged. Visual selections remain
 highlighted when the hardware cursor is shown.
 
 `cursorShape` also accepts a map from `insert`, `normal`, `visual`, and
@@ -536,7 +536,7 @@ terminal's default). `visual` covers `v`, `V`, and `Ctrl-V`. Entries
 override the steady defaults; missing or invalid entries keep them. Pi
 merges global and project maps first, so a project map overrides only the
 entries it names. Any other
-value, including `false`, disables cursor shapes, so a project can turn off a
+value other than an object or `true` disables cursor shapes, so a project can turn off a
 globally configured map.
 
 The terminal and any multiplexer must support DECSCUSR. When the prompt

@@ -38,11 +38,12 @@ const DEFAULTS: CursorShapes = {
 };
 
 /**
- * `vimEditor.cursorShape` from Pi's settings: `true` selects the defaults, a
- * map overrides them per mode, and anything else disables cursor shapes.
+ * `vimEditor.cursorShape` from Pi's settings: `undefined` or `true` selects
+ * the defaults, a map overrides them per mode, and anything else disables
+ * cursor shapes.
  */
 export function cursorShapes(value: unknown): CursorShapes | undefined {
-  if (value === true) return DEFAULTS;
+  if (value === true || value === undefined) return DEFAULTS;
   if (typeof value !== "object" || value === null || Array.isArray(value))
     return undefined;
   const shapes = { ...DEFAULTS };

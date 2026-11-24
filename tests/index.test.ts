@@ -157,7 +157,7 @@ test("publishes a fresh status for each new editor", () => {
 });
 
 test.each([false, true])(
-  "cursor shapes are opt-in and cleaned up across their lifecycle (cached editor: %s)",
+  "cursor shapes use mode defaults unless disabled and clean up across their lifecycle (cached editor: %s)",
   (cached) => {
     type Handler = (event: unknown, ctx: unknown) => void;
     const handlers = new Map<string, Handler>();
@@ -215,14 +215,20 @@ test.each([false, true])(
     };
     session();
     const first = editor();
-    expect(writes).toEqual([]);
-    expect(host.terminal.stop).toBe(originalStop);
+    expect(writes).toEqual(["\x1b[6 q"]);
+    expect(host.terminal.stop).not.toBe(originalStop);
     settings = { vimEditor: { cursorShape: true } };
     session();
     first.render(40);
-    expect(writes).toEqual(["\x1b[6 q"]);
-    const second = editor();
     expect(writes).toEqual(["\x1b[6 q", "\x1b[0 q", "\x1b[6 q"]);
+    const second = editor();
+    expect(writes).toEqual([
+      "\x1b[6 q",
+      "\x1b[0 q",
+      "\x1b[6 q",
+      "\x1b[0 q",
+      "\x1b[6 q",
+    ]);
     settings = { vimEditor: { cursorShape: false } };
     session();
     second.render(40);

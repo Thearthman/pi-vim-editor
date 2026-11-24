@@ -121,7 +121,7 @@ test("applies a per-mode style map to every mode, including all Visual modes", (
 });
 
 test.each([
-  [undefined, undefined],
+  [undefined, [6, 2, 2, 2, 2, 4]],
   [false, undefined],
   ["steady-bar", undefined],
   [1, undefined],
@@ -137,7 +137,7 @@ test.each([
     [6, 2, 2, 2, 2, 4],
   ],
 ] as const)(
-  "reads cursorShape %j as off, the defaults, or overrides",
+  "reads cursorShape %j as defaults, off, or overrides",
   (value, expected) => {
     const shapes = cursorShapes(value);
     expect(

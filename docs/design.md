@@ -385,18 +385,18 @@ doesn't depend on the border methods, which keep their behavior. The
 capability lives as long as the decoration, which has no `detach()`.
 User-facing contract: [`integration.md`](integration.md).
 
-NORMAL clamps the cursor onto a character. By default, the cursor remains
-Pi's reverse-video block, with no terminal escapes from this extension.
+NORMAL clamps the cursor onto a character.
 
-With `vimEditor.cursorShape: true`, `cursor.ts` uses DECSCUSR 6 (steady bar)
-in INSERT, 2 (steady block) in NORMAL/Visual, and 4 (steady underline) in
-REPLACE. A map instead of `true` overrides these defaults per mode with named
+Unless disabled, `cursor.ts` uses DECSCUSR 6 (steady bar) in INSERT, 2
+(steady block) in NORMAL/Visual, and 4 (steady underline) in REPLACE. A map
+overrides these defaults per mode with named
 styles (`blinking-bar`, …, `reset` for DECSCUSR 0). One setting, not a second
 key, keeps precedence trivial: Pi's settings merge objects but replace
 scalars, so a project's `false` disables a global map. The pure
 `cursorShapes()` parser resolves the setting into a complete table over all
 six internal modes (`visual` covers `vline` and `vblock`) or `undefined`
-(off), and the controller only looks up `shapes[mode]`. It checks the public `tui.getShowHardwareCursor()` at render time
+(off), and the controller only looks up `shapes[mode]`. An omitted setting
+uses the defaults; `false` disables them. It checks the public `tui.getShowHardwareCursor()` at render time
 and never changes cursor visibility. It only writes a shape when it changes
 and the focused editor emits `CURSOR_MARKER`. It leaves Pi's fake-cursor
 markers (`ESC _pi:fc BEL` … `ESC _pi:/fc BEL`) alone and lets Pi resolve them:
